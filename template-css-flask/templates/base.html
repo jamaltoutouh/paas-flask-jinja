@@ -1,0 +1,23 @@
+<!-- templates/base.html - Plantilla base para herencia -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Meta tags básicos -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Título dinámico que puede ser sobrescrito por templates hijos -->
+    <title>{% block titulo %}Mi App Flask{% endblock %}</title>
+    
+    <!-- Enlace al archivo CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Contenedor principal -->
+    <div class="container">
+        <!-- Bloque de contenido que será reemplazado por templates hijos -->
+        {% block contenido %}
+        {% endblock %}
+    </div>
+</body>
+</html>

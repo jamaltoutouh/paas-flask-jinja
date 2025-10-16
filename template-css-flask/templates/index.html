@@ -1,0 +1,14 @@
+<!-- templates/index.html - Página principal -->
+
+<!-- Extender la plantilla base -->
+{% extends "base.html" %}
+
+<!-- Definir el título específico para esta página -->
+{% block titulo %}{{ titulo }}{% endblock %}
+
+<!-- Contenido principal de la página -->
+{% block contenido %}
+    <h1>{{ titulo }}</h1>
+    <p>{{ mensaje }}</p>
+    <p>Esta es una aplicación Flask simple con templates y CSS básico.</p>
+{% endblock %}
