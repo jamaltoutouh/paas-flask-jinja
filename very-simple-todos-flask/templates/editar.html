@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Editar Tarea</title>
+</head>
+<body>
+    <h1>✏️ Editar Tarea #{{ tarea.id }}</h1>
+    
+    <!-- Formulario con datos actuales -->
+    <form method="POST" action="/actualizar/{{ tarea.id }}">
+        <p>
+            <label>Título de la tarea:</label><br>
+            <input type="text" name="titulo" value="{{ tarea.titulo }}" required size="50">
+        </p>
+        
+        <p>
+            Estado actual: 
+            {% if tarea.completada %}
+                ✅ Completada
+            {% else %}
+                ⏳ Pendiente
+            {% endif %}
+        </p>
+        
+        <p>
+            <button type="submit">💾 Guardar Cambios</button>
+            <a href="/">❌ Cancelar</a>
+        </p>
+    </form>
+    
+    <hr>
+    
+    <!-- Enlaces adicionales -->
+    <p>
+        <a href="/completar/{{ tarea.id }}">
+            {% if tarea.completada %}
+                ↩️ Marcar como Pendiente
+            {% else %}
+                ✅ Marcar como Completada
+            {% endif %}
+        </a>
+        |
+        <a href="/borrar/{{ tarea.id }}" onclick="return confirm('¿Borrar esta tarea?')">🗑️ Borrar Tarea</a>
+    </p>
+</body>
+</html>

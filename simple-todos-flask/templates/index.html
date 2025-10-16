@@ -1,0 +1,119 @@
+<!-- templates/index.html - Página principal con lista de tareas -->
+{% extends "base.html" %}
+
+{% block titulo %}Lista de Tareas - TODOs Flask{% endblock %}
+
+{% block contenido %}
+    <!-- Encabezado con estadísticas -->
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1>📋 Mis Tareas</h1>
+            <p class="text-muted">Gestiona tus tareas de forma simple y eficaz</p>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-light">
+                <div class="card-body text-center">
+                    <h5 class="card-title">📊 Estadísticas</h5>
+                    <p class="mb-1"><strong>Total:</strong> {{ total_tareas }} tareas</p>
+                    <p class="mb-1"><strong>Completadas:</strong> {{ tareas_completadas }}</p>
+                    <p class="mb-0"><strong>Pendientes:</strong> {{ total_tareas - tareas_completadas }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón para crear nueva tarea -->
+    <div class="mb-3">
+        <a href="{{ url_for('nueva_tarea_form') }}" class="btn btn-success">
+            ➕ Nueva Tarea
+        </a>
+    </div>
+
+    <!-- Lista de tareas -->
+    {% if todos %}
+        <div class="row">
+            {% for tarea in todos %}
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="card h-100 {% if tarea.completada %}border-success{% else %}border-warning{% endif %}">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span class="badge {% if tarea.completada %}bg-success{% else %}bg-warning text-dark{% endif %}">
+                                {% if tarea.completada %}✅ Completada{% else %}⏳ Pendiente{% endif %}
+                            </span>
+                            <small class="text-muted">#{{ tarea.id }}</small>
+                        </div>
+                        
+                        <div class="card-body">
+                            <h5 class="card-title {% if tarea.completada %}text-decoration-line-through text-muted{% endif %}">
+                                {{ tarea.titulo }}
+                            </h5>
+                            <p class="card-text text-muted">
+                                {{ tarea.descripcion[:50] }}{% if tarea.descripcion|length > 50 %}...{% endif %}
+                            </p>
+                            <small class="text-muted">
+                                📅 Creada: {{ tarea.fecha_creacion.split(' ')[0] }}
+                            </small>
+                        </div>
+                        
+                        <div class="card-footer bg-transparent">
+                            <div class="btn-group w-100" role="group">
+                                <!-- Botón ver detalles -->
+                                <a href="{{ url_for('ver_tarea', tarea_id=tarea.id) }}" 
+                                   class="btn btn-outline-info btn-sm" title="Ver detalles">
+                                    👁️
+                                </a>
+                                
+                                <!-- Botón editar -->
+                                <a href="{{ url_for('editar_tarea_form', tarea_id=tarea.id) }}" 
+                                   class="btn btn-outline-primary btn-sm" title="Editar">
+                                    ✏️
+                                </a>
+                                
+                                <!-- Botón completar/descompletar -->
+                                <a href="{{ url_for('completar_tarea', tarea_id=tarea.id) }}" 
+                                   class="btn btn-outline-{% if tarea.completada %}warning{% else %}success{% endif %} btn-sm"
+                                   title="{% if tarea.completada %}Marcar como pendiente{% else %}Marcar como completada{% endif %}">
+                                    {% if tarea.completada %}↩️{% else %}✅{% endif %}
+                                </a>
+                                
+                                <!-- Botón eliminar -->
+                                <a href="{{ url_for('eliminar_tarea', tarea_id=tarea.id) }}" 
+                                   class="btn btn-outline-danger btn-sm" 
+                                   onclick="return confirm('¿Estás seguro de que quieres eliminar esta tarea?')"
+                                   title="Eliminar">
+                                    🗑️
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <!-- Mensaje cuando no hay tareas -->
+        <div class="text-center py-5">
+            <div class="mb-4">
+                <i class="display-1">📝</i>
+            </div>
+            <h3 class="text-muted">¡No tienes tareas aún!</h3>
+            <p class="text-muted">Crea tu primera tarea para comenzar a organizar tu trabajo.</p>
+            <a href="{{ url_for('nueva_tarea_form') }}" class="btn btn-success btn-lg">
+                ➕ Crear Primera Tarea
+            </a>
+        </div>
+    {% endif %}
+
+    <!-- Información técnica para estudiantes -->
+    <div class="mt-5 pt-4 border-top">
+        <div class="row">
+            <div class="col-md-12">
+                <h6 class="text-muted">🔧 Información Técnica</h6>
+                <small class="text-muted">
+                    Esta aplicación demuestra operaciones CRUD básicas en Flask:
+                    <strong>Create</strong> (crear), <strong>Read</strong> (leer), 
+                    <strong>Update</strong> (actualizar), <strong>Delete</strong> (eliminar).
+                    Los datos se almacenan en una lista de Python en memoria.
+                </small>
+            </div>
+        </div>
+    </div>
+{% endblock %}

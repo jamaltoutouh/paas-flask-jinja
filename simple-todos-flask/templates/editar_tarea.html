@@ -1,0 +1,112 @@
+<!-- templates/editar_tarea.html - Formulario para editar tarea existente -->
+{% extends "base.html" %}
+
+{% block titulo %}Editar Tarea - TODOs Flask{% endblock %}
+
+{% block contenido %}
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">✏️ Editar Tarea #{{ tarea.id }}</h4>
+                </div>
+                
+                <div class="card-body">
+                    <!-- Información actual de la tarea -->
+                    <div class="alert alert-light mb-3">
+                        <strong>Estado actual:</strong> 
+                        <span class="badge {% if tarea.completada %}bg-success{% else %}bg-warning text-dark{% endif %}">
+                            {% if tarea.completada %}✅ Completada{% else %}⏳ Pendiente{% endif %}
+                        </span>
+                        <br>
+                        <strong>Creada:</strong> {{ tarea.fecha_creacion }}
+                    </div>
+
+                    <!-- Formulario para editar tarea -->
+                    <form method="POST" action="{{ url_for('actualizar_tarea', tarea_id=tarea.id) }}">
+                        <div class="mb-3">
+                            <label for="titulo" class="form-label">
+                                📝 Título de la tarea *
+                            </label>
+                            <input type="text" 
+                                   class="form-control" 
+                                   id="titulo" 
+                                   name="titulo" 
+                                   value="{{ tarea.titulo }}"
+                                   required 
+                                   maxlength="100">
+                            <div class="form-text">
+                                El título es obligatorio (máximo 100 caracteres)
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label">
+                                📄 Descripción (opcional)
+                            </label>
+                            <textarea class="form-control" 
+                                      id="descripcion" 
+                                      name="descripcion" 
+                                      rows="4" 
+                                      maxlength="500">{{ tarea.descripcion if tarea.descripcion != 'Sin descripción' else '' }}</textarea>
+                            <div class="form-text">
+                                Modifica los detalles de la tarea (máximo 500 caracteres)
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{{ url_for('mostrar_todos') }}" class="btn btn-secondary">
+                                ↩️ Cancelar
+                            </a>
+                            <a href="{{ url_for('ver_tarea', tarea_id=tarea.id) }}" class="btn btn-info">
+                                👁️ Ver Detalles
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                💾 Actualizar Tarea
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Acciones adicionales -->
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h6 class="card-title">🔧 Acciones Adicionales</h6>
+                    <div class="d-grid gap-2 d-md-flex">
+                        <!-- Cambiar estado -->
+                        <a href="{{ url_for('completar_tarea', tarea_id=tarea.id) }}" 
+                           class="btn btn-outline-{% if tarea.completada %}warning{% else %}success{% endif %} btn-sm">
+                            {% if tarea.completada %}
+                                ↩️ Marcar como Pendiente
+                            {% else %}
+                                ✅ Marcar como Completada
+                            {% endif %}
+                        </a>
+                        
+                        <!-- Eliminar tarea -->
+                        <a href="{{ url_for('eliminar_tarea', tarea_id=tarea.id) }}" 
+                           class="btn btn-outline-danger btn-sm"
+                           onclick="return confirm('¿Estás seguro de que quieres eliminar esta tarea?')">
+                            🗑️ Eliminar Tarea
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Información técnica -->
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-8 col-lg-6">
+            <div class="alert alert-info">
+                <h6 class="alert-heading">🔧 Información Técnica</h6>
+                <p class="mb-0 small">
+                    Este formulario realiza una operación <strong>UPDATE</strong>. 
+                    Flask busca la tarea por ID usando <code>next()</code> y actualiza 
+                    los campos modificados en la lista <code>todos</code>.
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

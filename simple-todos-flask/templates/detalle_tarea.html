@@ -1,0 +1,140 @@
+<!-- templates/detalle_tarea.html - Vista detallada de una tarea -->
+{% extends "base.html" %}
+
+{% block titulo %}Tarea: {{ tarea.titulo }} - TODOs Flask{% endblock %}
+
+{% block contenido %}
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <!-- Información principal de la tarea -->
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center 
+                            {% if tarea.completada %}bg-success text-white{% else %}bg-warning text-dark{% endif %}">
+                    <h4 class="mb-0">📋 Detalles de la Tarea</h4>
+                    <span class="badge {% if tarea.completada %}bg-light text-success{% else %}bg-dark{% endif %}">
+                        #{{ tarea.id }}
+                    </span>
+                </div>
+                
+                <div class="card-body">
+                    <!-- Estado de la tarea -->
+                    <div class="mb-3">
+                        <label class="fw-bold text-muted">Estado:</label>
+                        <span class="badge fs-6 {% if tarea.completada %}bg-success{% else %}bg-warning text-dark{% endif %}">
+                            {% if tarea.completada %}✅ Completada{% else %}⏳ Pendiente{% endif %}
+                        </span>
+                    </div>
+                    
+                    <!-- Título -->
+                    <div class="mb-3">
+                        <label class="fw-bold text-muted">Título:</label>
+                        <h5 class="{% if tarea.completada %}text-decoration-line-through text-muted{% endif %}">
+                            {{ tarea.titulo }}
+                        </h5>
+                    </div>
+                    
+                    <!-- Descripción -->
+                    <div class="mb-3">
+                        <label class="fw-bold text-muted">Descripción:</label>
+                        <div class="p-3 bg-light rounded">
+                            {% if tarea.descripcion and tarea.descripcion != 'Sin descripción' %}
+                                <p class="mb-0">{{ tarea.descripcion }}</p>
+                            {% else %}
+                                <p class="mb-0 text-muted fst-italic">No hay descripción disponible</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <!-- Fecha de creación -->
+                    <div class="mb-3">
+                        <label class="fw-bold text-muted">Fecha de creación:</label>
+                        <p class="mb-0">
+                            📅 {{ tarea.fecha_creacion.split(' ')[0] }} 
+                            🕐 {{ tarea.fecha_creacion.split(' ')[1] }}
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Botones de acción -->
+                <div class="card-footer bg-transparent">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                        <a href="{{ url_for('mostrar_todos') }}" class="btn btn-secondary">
+                            ← Volver a la Lista
+                        </a>
+                        
+                        <a href="{{ url_for('editar_tarea_form', tarea_id=tarea.id) }}" 
+                           class="btn btn-primary">
+                            ✏️ Editar
+                        </a>
+                        
+                        <a href="{{ url_for('completar_tarea', tarea_id=tarea.id) }}" 
+                           class="btn btn-{% if tarea.completada %}warning{% else %}success{% endif %}">
+                            {% if tarea.completada %}
+                                ↩️ Marcar Pendiente
+                            {% else %}
+                                ✅ Completar
+                            {% endif %}
+                        </a>
+                        
+                        <a href="{{ url_for('eliminar_tarea', tarea_id=tarea.id) }}" 
+                           class="btn btn-danger"
+                           onclick="return confirm('¿Estás seguro de que quieres eliminar esta tarea?')">
+                            🗑️ Eliminar
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Información adicional -->
+            <div class="card mt-3">
+                <div class="card-body bg-light">
+                    <h6 class="card-title">📊 Información Adicional</h6>
+                    <div class="row">
+                        <div class="col-6">
+                            <small class="text-muted">
+                                <strong>ID único:</strong> {{ tarea.id }}
+                            </small>
+                        </div>
+                        <div class="col-6">
+                            <small class="text-muted">
+                                <strong>Caracteres en título:</strong> {{ tarea.titulo|length }}
+                            </small>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-6">
+                            <small class="text-muted">
+                                <strong>Estado:</strong> 
+                                {% if tarea.completada %}Finalizada{% else %}En progreso{% endif %}
+                            </small>
+                        </div>
+                        <div class="col-6">
+                            <small class="text-muted">
+                                <strong>Caracteres en descripción:</strong> 
+                                {% if tarea.descripcion and tarea.descripcion != 'Sin descripción' %}
+                                    {{ tarea.descripcion|length }}
+                                {% else %}
+                                    0
+                                {% endif %}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Información técnica -->
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-8 col-lg-6">
+            <div class="alert alert-info">
+                <h6 class="alert-heading">🔧 Información Técnica</h6>
+                <p class="mb-0 small">
+                    Esta vista muestra una operación <strong>READ</strong> individual. 
+                    Flask busca la tarea por ID en la lista y muestra todos sus detalles. 
+                    Se usan filtros de Jinja2 como <code>|length</code> para mostrar estadísticas.
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

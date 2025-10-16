@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TODOs Simples</title>
+</head>
+<body>
+    <h1>📝 Mis Tareas</h1>
+    
+    <!-- Botón para nueva tarea -->
+    <p>
+        <a href="/nueva">➕ Nueva Tarea</a>
+    </p>
+    
+    <!-- Lista de tareas -->
+    {% if todos %}
+        <ul>
+        {% for tarea in todos %}
+            <li>
+                <!-- Título de la tarea -->
+                {% if tarea.completada %}
+                    <strike>{{ tarea.titulo }}</strike> ✅
+                {% else %}
+                    {{ tarea.titulo }} ⏳
+                {% endif %}
+                
+                <!-- Botones de acción como enlaces -->
+                <a href="/editar/{{ tarea.id }}">✏️ Editar</a>
+                <a href="/completar/{{ tarea.id }}">
+                    {% if tarea.completada %}
+                        ↩️ Desmarcar
+                    {% else %}
+                        ✅ Completar
+                    {% endif %}
+                </a>
+                <a href="/borrar/{{ tarea.id }}" onclick="return confirm('¿Borrar tarea?')">🗑️ Borrar</a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay tareas. <a href="/nueva">Crea la primera</a></p>
+    {% endif %}
+    
+    <hr>
+    <p><small>Total: {{ todos|length }} tareas</small></p>
+</body>
+</html>

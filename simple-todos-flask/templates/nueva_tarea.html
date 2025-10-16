@@ -1,0 +1,88 @@
+<!-- templates/nueva_tarea.html - Formulario para crear nueva tarea -->
+{% extends "base.html" %}
+
+{% block titulo %}Nueva Tarea - TODOs Flask{% endblock %}
+
+{% block contenido %}
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0">➕ Crear Nueva Tarea</h4>
+                </div>
+                
+                <div class="card-body">
+                    <!-- Formulario para crear tarea -->
+                    <form method="POST" action="{{ url_for('crear_tarea') }}">
+                        <div class="mb-3">
+                            <label for="titulo" class="form-label">
+                                📝 Título de la tarea *
+                            </label>
+                            <input type="text" 
+                                   class="form-control" 
+                                   id="titulo" 
+                                   name="titulo" 
+                                   required 
+                                   maxlength="100"
+                                   placeholder="Ej: Estudiar para el examen de Flask">
+                            <div class="form-text">
+                                El título es obligatorio (máximo 100 caracteres)
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label">
+                                📄 Descripción (opcional)
+                            </label>
+                            <textarea class="form-control" 
+                                      id="descripcion" 
+                                      name="descripcion" 
+                                      rows="4" 
+                                      maxlength="500"
+                                      placeholder="Describe los detalles de la tarea..."></textarea>
+                            <div class="form-text">
+                                Añade más detalles sobre lo que necesitas hacer (máximo 500 caracteres)
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{{ url_for('mostrar_todos') }}" class="btn btn-secondary">
+                                ↩️ Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-success">
+                                ✅ Crear Tarea
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Consejos para el usuario -->
+            <div class="card mt-3">
+                <div class="card-body bg-light">
+                    <h6 class="card-title">💡 Consejos</h6>
+                    <ul class="mb-0 small text-muted">
+                        <li>Usa títulos descriptivos para encontrar tus tareas fácilmente</li>
+                        <li>La descripción te ayudará a recordar los detalles importantes</li>
+                        <li>Puedes editar la tarea después de crearla</li>
+                        <li>Las tareas nuevas se crean como "pendientes" por defecto</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Información técnica -->
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-8 col-lg-6">
+            <div class="alert alert-info">
+                <h6 class="alert-heading">🔧 Información Técnica</h6>
+                <p class="mb-0 small">
+                    Este formulario envía datos usando <strong>método POST</strong> a la ruta 
+                    <code>/crear</code>. Flask procesa los datos con <code>request.form.get()</code> 
+                    y los añade a la lista <code>todos</code> en memoria.
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
