@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="highlight">
+    <h2>👋 Saludo Personalizado</h2>
+    <p>¡Aquí puedes ver Jinja2 en acción con formularios!</p>
+</div>
+
+<form method="POST" style="margin: 30px 0;">
+    <div class="form-group">
+        <label for="name" style="display: block; margin-bottom: 10px; font-weight: bold;">
+            🏷️ Introduce tu nombre:
+        </label>
+        <input type="text" 
+               id="name" 
+               name="name" 
+               placeholder="Escribe tu nombre aquí..." 
+               value="{{ name if name else '' }}"
+               required>
+    </div>
+    <button type="submit">🚀 Enviar Saludo</button>
+</form>
+
+{% if name %}
+<div style="margin-top: 30px; padding: 25px; background: rgba(255, 255, 255, 0.2); border-radius: 15px; border: 2px solid rgba(255, 255, 255, 0.3);">
+    <h3>🎉 ¡Hola, {{ name }}!</h3>
+    <p>🌟 Es genial conocerte. Este saludo fue generado dinámicamente usando:</p>
+    <ul style="text-align: left; display: inline-block; margin: 15px 0;">
+        <li><strong>Flask</strong> para manejar el formulario</li>
+        <li><strong>Jinja2</strong> para mostrar tu nombre</li>
+        <li><strong>HTML</strong> para la estructura</li>
+        <li><strong>CSS</strong> para el estilo</li>
+    </ul>
+    
+    <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 10px; margin-top: 20px;">
+        <h4>🔍 Código Jinja2 usado:</h4>
+        <code style="color: #ffeb3b;">{{ "{% if name %}" }}</code><br>
+        <code style="color: #4caf50;">&nbsp;&nbsp;¡Hola, {{ "{{ name }}" }}!</code><br>
+        <code style="color: #ffeb3b;">{{ "{% endif %}" }}</code>
+    </div>
+</div>
+{% else %}
+<div style="margin-top: 20px; padding: 20px; background: rgba(255, 255, 255, 0.1); border-radius: 10px;">
+    <h4>💭 ¿Cómo funciona?</h4>
+    <p>1. Introduces tu nombre en el formulario<br>
+    2. Flask procesa los datos del formulario<br>
+    3. Jinja2 muestra el contenido dinámicamente<br>
+    4. ¡Ves un saludo personalizado!</p>
+    
+    <p style="margin-top: 15px; opacity: 0.8;">
+        <em>🎯 Este es un ejemplo perfecto de cómo las plantillas pueden ser interactivas.</em>
+    </p>
+</div>
+{% endif %}
+
+<div style="margin-top: 30px; padding: 15px; background: rgba(255, 255, 255, 0.1); border-radius: 10px;">
+    <h4>🔄 Prueba diferentes nombres</h4>
+    <p>Cambia el nombre y observa cómo la página se actualiza dinámicamente. 
+    ¡Es la magia de Jinja2 trabajando con Flask!</p>
+</div>
+{% endblock %}

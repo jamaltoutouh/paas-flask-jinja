@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="highlight">
+    <h2>📚 Acerca de este proyecto</h2>
+    <p>Este proyecto demuestra cómo crear y desplegar una aplicación web simple usando tecnologías modernas.</p>
+</div>
+
+<div style="text-align: left; max-width: 600px; margin: 0 auto;">
+    <h3>🔧 Tecnologías utilizadas:</h3>
+    <ul>
+        <li><strong>Python 3.x</strong> - Lenguaje de programación</li>
+        <li><strong>Flask 2.3.3</strong> - Framework web ligero</li>
+        <li><strong>Jinja2 3.1.2</strong> - Motor de plantillas</li>
+        <li><strong>HTML5 & CSS3</strong> - Frontend moderno</li>
+        <li><strong>Vercel</strong> - Hosting gratuito</li>
+        <li><strong>GitHub</strong> - Control de versiones</li>
+    </ul>
+
+    <h3>📁 Estructura del proyecto:</h3>
+    <pre style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 5px; overflow-x: auto;">
+vercel-deployment/
+├── app.py              # Aplicación Flask principal
+├── requirements.txt    # Dependencias de Python
+├── vercel.json        # Configuración de Vercel
+├── templates/         # Plantillas Jinja2
+│   ├── base.html      # Plantilla base
+│   ├── index.html     # Página principal
+│   ├── about.html     # Esta página
+│   └── greet.html     # Página de saludo
+└── README.md          # Documentación
+    </pre>
+
+    <h3>🚀 Proceso de despliegue:</h3>
+    <ol>
+        <li>Crear repositorio en GitHub</li>
+        <li>Subir el código al repositorio</li>
+        <li>Conectar Vercel con GitHub</li>
+        <li>¡La aplicación se despliega automáticamente!</li>
+    </ol>
+</div>
+
+<div style="margin-top: 30px; padding: 20px; background: rgba(255, 255, 255, 0.1); border-radius: 10px;">
+    <h4>💡 ¿Por qué este stack?</h4>
+    <p><strong>Flask</strong> es perfecto para proyectos pequeños y medianos, mientras que <strong>Jinja2</strong> 
+    permite crear plantillas dinámicas de forma elegante. <strong>Vercel</strong> ofrece hosting gratuito 
+    con despliegue automático desde GitHub, ideal para proyectos educativos y prototipos.</p>
+</div>
+{% endblock %}
